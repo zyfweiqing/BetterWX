@@ -22,7 +22,7 @@ save(new_exe, data)
 # [Weixin.dll]
 dll = path(input("\nWeixin.dll: "))
 data = load(dll)
-# Redirect global_config -> global_confi2
+# Redirect global_config -> global_conf2g
 # Just search 'global_config' and you'll find the pattern.
 # 48 B8:     67 6C 6F 62 61 6C 5F 63   // MOV RAX, "global_c" (0x5F6C61626F6C676)
 # 48 89 05: [07 78 C3 07]              // MOV [RIP+offset], RAX
