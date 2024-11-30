@@ -9,7 +9,7 @@ def path(path: str):
 
 
 def pause():
-    input("Press Enter to continue...")
+    input("\nPress Enter to continue...")
 
 
 def b2hex(data: bytes, max: int = 32):
@@ -40,8 +40,13 @@ def load(path: pathlib.Path):
 
 def save(path: pathlib.Path, data: bytes):
     print(f"\n> Saved {path}")
-    with open(path, "wb") as f:
-        f.write(data)
+    try:
+        with open(path, "wb") as f:
+            f.write(data)
+    except PermissionError:
+        print(f"[ERR] The file '{path}' is in use, please close it and try again")
+        pause()
+        exit()
 
 
 def backup(path: pathlib.Path):
