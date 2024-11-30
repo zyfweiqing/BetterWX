@@ -62,3 +62,4 @@ data = wildcard_replace(data, UNLOCK_PATTERN, UNLOCK_REPLACE)
 # Rename Weixin.dll -> Weixin.dl2
 new_dll = dll.with_name(f"Weixin.dl{n}")
 save(new_dll, data)
+pause()

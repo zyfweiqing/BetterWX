@@ -29,3 +29,4 @@ data = wildcard_replace(data, UNLOCK_PATTERN, UNLOCK_REPLACE)
 # Backup and save
 backup(dll)
 save(dll, data)
+pause()
