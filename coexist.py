@@ -3,7 +3,7 @@ from _utils import *
 # Number
 n = input("\nNumber: (0~9): ")
 if not n in "0123456789":
-    print("[ERR] Invalid number")
+    print(f"{RED}[ERR] Invalid number{RESET}")
     pause()
     exit()
 

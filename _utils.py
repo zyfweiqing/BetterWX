@@ -3,13 +3,26 @@ import re
 import shutil
 import pathlib
 
+if os.name == "nt":
+    # ANSI Support for OLD Windows
+    os.system("color")
+
+GREEN = "\033[92m"
+RED = "\033[91m"
+YELLOW = "\033[93m"
+BLUE = "\033[96m"
+RESET = "\033[0m"
+
+REVERSE = "\033[7m"
+NO_REVERSE = "\033[27m"
+
 
 def path(path: str):
     return pathlib.Path(path).resolve()
 
 
 def pause():
-    input("\nPress Enter to continue...")
+    input(f"\n{REVERSE}Press Enter to continue...{NO_REVERSE}")
 
 
 def b2hex(data: bytes, max: int = 32):
@@ -39,12 +52,15 @@ def load(path: pathlib.Path):
 
 
 def save(path: pathlib.Path, data: bytes):
-    print(f"\n> Saved {path}")
+    print(f"\n> Save {path}")
     try:
         with open(path, "wb") as f:
             f.write(data)
+            print(f"{GREEN}[√] File saved{RESET}")
     except PermissionError:
-        print(f"[ERR] The file '{path}' is in use, please close it and try again")
+        print(
+            f"{RED}[ERR] The file '{path}' is in use, please close it and try again{RESET}"
+        )
         pause()
         exit()
 
@@ -54,9 +70,9 @@ def backup(path: pathlib.Path):
     bakfile = path.with_name(path.name + ".bak")
     if not os.path.exists(bakfile):
         shutil.copy2(path, bakfile)
-        print(f"[√] Backup created: '{bakfile.name}'")
+        print(f"{GREEN}[√] Backup created: '{bakfile.name}'{RESET}")
     else:
-        print(f"[INFO] Backup '{bakfile.name}' already exists, good")
+        print(f"{BLUE}[i] Backup '{bakfile.name}' already exists, good{RESET}")
 
 
 def replace(data: bytes, pattern: str | bytes, replace: str | bytes):
@@ -72,19 +88,19 @@ def replace(data: bytes, pattern: str | bytes, replace: str | bytes):
     if count == 0:
         if patched_count > 0:
             print(
-                f"[√?] Found {patched_count} pattern{'' if patched_count == 1 else 's'} already patched"
+                f"{BLUE}[i] Found {patched_count} pattern{'' if patched_count == 1 else 's'} already patched{RESET}"
             )
             return data
-        print(f"[WARN] Pattern <{b2hex(pattern)}> not found, SKIPPED!")
+        print(f"{YELLOW}[WARN] Pattern <{b2hex(pattern)}> not found, SKIPPED!{RESET}")
         return data
 
     data = data.replace(pattern, replace)
     if patched_count > 0:
         print(
-            f"[√] Patched {count} pattern{'' if count == 1 else 's'}, found {patched_count} already patched"
+            f"{GREEN}[√] Patched {count} pattern{'' if count == 1 else 's'}, found {patched_count} already patched{RESET}"
         )
     else:
-        print(f"[√] Patched {count} pattern{'' if count == 1 else 's'}")
+        print(f"{GREEN}[√] Patched {count} pattern{'' if count == 1 else 's'}{RESET}")
     return data
 
 
@@ -99,20 +115,22 @@ def wildcard_tokenize(wildcard: str) -> list:
         wildcard = wildcard[:-3]
 
     if len(wildcard) % 2 != 0:
-        print(f"[ERR] Wildcard <{wildcard}> has invalid byte {wildcard[-1]}_")
+        print(
+            f"{RED}[ERR] Wildcard <{wildcard}> has invalid byte {wildcard[-1]}_{RESET}"
+        )
         pause()
         exit()
     for i in range(0, len(wildcard), 2):
         a = wildcard[i]
         b = wildcard[i + 1]
         if a not in "0123456789ABCDEF?" or b not in "0123456789ABCDEF?":
-            print(f"[ERR] Wildcard <{wildcard}> has invalid byte {a}{b}")
+            print(f"{RED}[ERR] Wildcard <{wildcard}> has invalid byte {a}{b}{RESET}")
             pause()
             exit()
         elif "?" == a == b:
             tokens.append("??")
         elif a == "?" or b == "?":
-            print(f"[ERR] Wildcard <{wildcard}> has invalid byte {a}{b}")
+            print(f"{RED}[ERR] Wildcard <{wildcard}> has invalid byte {a}{b}{RESET}")
             pause()
             exit()
         else:
@@ -127,23 +145,27 @@ def wildcard_replace(data: bytes, pattern: str | list, replace: str | list):
         replace = wildcard_tokenize(replace)
 
     if replace[0] is ...:
-        # print(f"[INFO] Wildcard <{patt2hex(replace)}> used as suffix")
+        # print(f"{BLUE}[i] Wildcard <{patt2hex(replace)}> used as suffix{RESET}")
         replace = ["??"] * (len(pattern) - len(replace) + 1) + replace[1:]
     else:
         if ... in pattern:
-            print(f"[ERR] Wildcard <{patt2hex(pattern)}> has invalid token ...")
+            print(
+                f"{RED}[ERR] Wildcard <{patt2hex(pattern)}> has invalid token ...{RESET}"
+            )
             pause()
             exit()
         elif ... in replace:
-            print(f"[ERR] Wildcard <{patt2hex(replace)}> has invalid token ...")
+            print(
+                f"{RED}[ERR] Wildcard <{patt2hex(replace)}> has invalid token ...{RESET}"
+            )
             pause()
             exit()
     if len(replace) < len(pattern):
-        # print(f"[INFO] Wildcard <{patt2hex(replace)}> used as prefix")
+        # print(f"{BLUE}[i] Wildcard <{patt2hex(replace)}> used as prefix{RESET}")
         replace += ["??"] * (len(pattern) - len(replace))
 
     if len(replace) != len(pattern):
-        print("[ERR] Pattern and replace length mismatch")
+        print(f"{RED}[ERR] Pattern and replace length mismatch{RESET}")
         pause()
         exit()
     print(f"> {patt2hex(pattern, 0)} => {patt2hex(replace, 0)}")
@@ -181,17 +203,19 @@ def wildcard_replace(data: bytes, pattern: str | list, replace: str | list):
     if original_matches == 0:
         if patched_matches > 0:
             print(
-                f"[√?] Found {patched_matches} pattern{'' if patched_matches == 1 else 's'} already patched"
+                f"{BLUE}[i] Found {patched_matches} pattern{'' if patched_matches == 1 else 's'} already patched{RESET}"
             )
             return data
-        print(f"[WARN] Pattern <{patt2hex(pattern)}> not found, SKIPPED!")
+        print(
+            f"{YELLOW}[WARN] Pattern <{patt2hex(pattern)}> not found, SKIPPED!{RESET}"
+        )
         return data
 
     new_data, count = regex.subn(repl_bytes, data)
     if patched_matches > 0:
         print(
-            f"[√] Patched {count} pattern{'' if count == 1 else 's'}, found {patched_matches} already patched"
+            f"{GREEN}[√] Patched {count} pattern{'' if count == 1 else 's'}, found {patched_matches} already patched{RESET}"
         )
     else:
-        print(f"[√] Patched {count} pattern{'' if count == 1 else 's'}")
+        print(f"{GREEN}[√] Patched {count} pattern{'' if count == 1 else 's'}{RESET}")
     return new_data
