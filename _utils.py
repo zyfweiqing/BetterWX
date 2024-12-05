@@ -65,12 +65,26 @@ def replace(data: bytes, pattern: str | bytes, replace: str | bytes):
     if isinstance(replace, str):
         replace = replace.encode()
     print(f"> {b2hex(pattern, 0)} => {b2hex(replace, 0)}")
-    if pattern not in data:
+
+    count = data.count(pattern)
+    patched_count = data.count(replace)
+
+    if count == 0:
+        if patched_count > 0:
+            print(
+                f"[√?] Found {patched_count} pattern{'' if patched_count == 1 else 's'} already patched"
+            )
+            return data
         print(f"[WARN] Pattern <{b2hex(pattern)}> not found, SKIPPED!")
         return data
-    count = data.count(pattern)
+
     data = data.replace(pattern, replace)
-    print(f"[√] Patched {count} pattern{'' if count == 1 else 's'}")
+    if patched_count > 0:
+        print(
+            f"[√] Patched {count} pattern{'' if count == 1 else 's'}, found {patched_count} already patched"
+        )
+    else:
+        print(f"[√] Patched {count} pattern{'' if count == 1 else 's'}")
     return data
 
 
@@ -111,6 +125,7 @@ def wildcard_replace(data: bytes, pattern: str | list, replace: str | list):
         pattern = wildcard_tokenize(pattern)
     if isinstance(replace, str):
         replace = wildcard_tokenize(replace)
+
     if replace[0] is ...:
         # print(f"[INFO] Wildcard <{patt2hex(replace)}> used as suffix")
         replace = ["??"] * (len(pattern) - len(replace) + 1) + replace[1:]
@@ -134,29 +149,49 @@ def wildcard_replace(data: bytes, pattern: str | list, replace: str | list):
     print(f"> {patt2hex(pattern, 0)} => {patt2hex(replace, 0)}")
 
     regex_bytes = b""
+    patched_bytes = b""
     repl_bytes = b""
-
     group_count = 1
 
     for p, r in zip(pattern, replace):
         if p == "??":
             regex_bytes += b"(.)"
+            patched_bytes += b"(.)"
             if r == "??":
                 repl_bytes += b"\\" + str(group_count).encode()
             else:
                 repl_bytes += bytes.fromhex(r)
+                patched_bytes += re.escape(bytes.fromhex(r))
             group_count += 1
         else:
             regex_bytes += re.escape(bytes.fromhex(p))
             if r == "??":
                 repl_bytes += bytes.fromhex(p)
+                patched_bytes += re.escape(bytes.fromhex(p))
             else:
                 repl_bytes += bytes.fromhex(r)
+                patched_bytes += re.escape(bytes.fromhex(r))
 
     regex = re.compile(regex_bytes, re.DOTALL)
-    new_data, count = regex.subn(repl_bytes, data)
-    if count:
-        print(f"[√] Patched {count} pattern{"" if count == 1 else "s"}")
-    else:
+    patched = re.compile(patched_bytes, re.DOTALL)
+
+    original_matches = len(list(regex.finditer(data)))
+    patched_matches = len(list(patched.finditer(data)))
+
+    if original_matches == 0:
+        if patched_matches > 0:
+            print(
+                f"[√?] Found {patched_matches} pattern{'' if patched_matches == 1 else 's'} already patched"
+            )
+            return data
         print(f"[WARN] Pattern <{patt2hex(pattern)}> not found, SKIPPED!")
+        return data
+
+    new_data, count = regex.subn(repl_bytes, data)
+    if patched_matches > 0:
+        print(
+            f"[√] Patched {count} pattern{'' if count == 1 else 's'}, found {patched_matches} already patched"
+        )
+    else:
+        print(f"[√] Patched {count} pattern{'' if count == 1 else 's'}")
     return new_data
