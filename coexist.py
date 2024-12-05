@@ -42,6 +42,12 @@ C7 05 ?? ?? ?? ?? 6F 6E 66 {ord(n):02X}
 66 C7 05 ?? ?? ?? ?? 67 00
 """
 data = wildcard_replace(data, COEXIST_CONFIG_PATTERN, COEXIST_CONFIG_REPLACE)
+# Redirect host-redirect.xml -> host-redirect.xm2
+# This file affects the auto-login feature.
+print(f"\n> Redirecting host-redirect.xml -> host-redirect.xm{n}")
+AUTOLOGIN_PATTERN = "host-redirect.xml"
+AUTOLOGIN_REPLACE = f"host-redirect.xm{n}"
+data = replace(data, AUTOLOGIN_PATTERN, AUTOLOGIN_REPLACE)
 # Block multi-instance check (lock.ini)
 # See `unlock.py`.
 print(f"\n> Blocking multi-instance check")
