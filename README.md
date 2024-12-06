@@ -1,8 +1,8 @@
 # BetterWX
 微信 PC 4.0 防撤回/多开补丁工具
 
-系统：Windows<br>
-版本：WeChat Beta 4.0.x
+支持平台：Windows x64<br>
+验证版本：WeChat Beta 4.0.1.13
 
 ## 使用方法
 0. 首先你要有比较新的 Python，并且关掉了微信和烦人的安全管家。
@@ -10,9 +10,11 @@
 2. 运行下列代码，然后输入对应的文件路径（或者把文件拖到终端窗口里）。<br>
    在修改之前，原文件会备份到 Weixin.dll.bak。
    
-   `revoke.py`：防撤回无提示【所有 revokemsg 消息变为未知消息，不响应撤回操作】<br>
-   `unlock.py`：多开【移除 lock.ini 锁文件检测】<br>
-   `coexist.py`：共存版制作器【选择数字 ζ=0~9，生成一个 Weixinζ.exe 和 Weixin.dlζ，其设置数据保存在 global_confζg】
+   `revoke.py`：防撤回无提示<br>【所有 revokemsg 消息变为未知消息，不响应撤回操作】
+
+   `unlock.py`：多开<br>【移除 lock.ini 锁文件检测】
+
+   `coexist.py`：共存版制作器<br>【选择数字 ζ=0~9，生成一个 Weixinζ.exe 和 Weixin.dlζ，其设置数据保存在 global_confζg、自动登录端口数据保存在 host-redirect.xmζ】
 
 ## 问题解答
 
@@ -32,7 +34,7 @@
   Unlicense，完全放弃任何权利。
 
 - 特征怎么来的？<br>
-  跟我没有关系，你信我 (ˉ▽ˉ；)...
+  跟我没有关系，你信我噢 (ˉ▽ˉ；)...
 
 - 作者可爱吗？<br>
   很可爱的 OwO，要不要[来看看我做的其他东西](https://github.com/zetaloop)？
