@@ -1,4 +1,6 @@
 # BetterWX
+<img width="400" src="https://github.com/user-attachments/assets/4bdfb590-d913-4543-b54c-347f6b1d14e7" />
+
 微信 PC 4.0 防撤回/多开补丁工具
 
 支持平台：Windows x64<br>
@@ -31,7 +33,7 @@
   除了多开是作为共存的前置条件，别的可以自己选。
 
 - 本项目的许可证？<br>
-  Unlicense，完全放弃任何权利。
+  Unlicense，完全放弃任何权利。包括那个图标。
 
 - 特征怎么来的？<br>
   跟我没有关系，你信我噢 (ˉ▽ˉ；)...
