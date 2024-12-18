@@ -14,7 +14,7 @@
 
    `unlock.py`：多开<br>【移除 lock.ini 锁文件检测】
 
-   `coexist.py`：共存版制作器<br>【选择数字 ζ=0~9，生成一个 Weixinζ.exe 和 Weixin.dlζ，其设置数据保存在 global_confζg、自动登录端口数据保存在 host-redirect.xmζ】
+   `coexist.py`：共存版制作器<br>【选择数字 ζ=0~9，生成一个 Weixinζ.exe 和 Weixin.dlζ，其设置数据保存在 global_confζg、自动登录端口数据保存在 host-redirect.xmζ】<br>【共存版的所有消息记录和原版共用，随便登录哪个应该都不会丢消息】
 
 ## 问题解答
 
