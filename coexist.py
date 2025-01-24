@@ -48,21 +48,25 @@ print(f"\n> Redirecting host-redirect.xml -> host-redirect.xm{n}")
 AUTOLOGIN_PATTERN = "host-redirect.xml"
 AUTOLOGIN_REPLACE = f"host-redirect.xm{n}"
 data = replace(data, AUTOLOGIN_PATTERN, AUTOLOGIN_REPLACE)
-# Block multi-instance check (lock.ini)
-# See `unlock.py`.
+# Block multi-instance check
+# See `unmutex.py`.
 print(f"\n> Blocking multi-instance check")
 UNLOCK_PATTERN = """
-C7 44 24 ?? FF FF FF FF
-31 F6
-45 31 C0
-41 B9 FF FF FF FF
-FF 15 ?? ?? ?? ??
-85 C0
-75 0F
+55
+41 57
+41 56
+41 54
+56
+57
+53
+48 81 EC ?? ?? ?? ??
+48 8D AC 24 ?? ?? ?? ??
+48 C7 85 ?? ?? ?? ?? FE FF FF FF
+48 C7 45 ?? 00 00 00 00
 """
 UNLOCK_REPLACE = """
+C3
 ...
-EB 0F
 """
 data = wildcard_replace(data, UNLOCK_PATTERN, UNLOCK_REPLACE)
 # Rename Weixin.dll -> Weixin.dl2
