@@ -1,7 +1,7 @@
 from _utils import *
 
 # [Weixin.dll]
-dll = path(input("\nWeixin.dll: "))
+dll = dllpath(input("\nWeixin.dll: "))
 data = load(dll)
 # Anti Revoke
 # Search 'revokemsg' and you'll find it.

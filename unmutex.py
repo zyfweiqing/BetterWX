@@ -1,7 +1,7 @@
 from _utils import *
 
 # [Weixin.dll]
-dll = path(input("\nWeixin.dll: "))
+dll = dllpath(input("\nWeixin.dll: "))
 data = load(dll)
 # Block multi-instance check (Mutex)
 # Search 'XWeChat_App_Instance_Identity_Mutex_Name' to find the function.

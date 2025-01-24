@@ -8,7 +8,7 @@ if len(n) != 1 or not n in "0123456789":
     exit()
 
 # [Weixin.exe]
-exe = path(input("\nWeixin.exe: "))
+exe = exepath(input("\nWeixin.exe: "))
 data = load(exe)
 # Redirect Weixin.dll -> Weixin.dl2
 print(f"\n> Redirecting Weixin.dll -> Weixin.dl{n}")
@@ -20,7 +20,7 @@ new_exe = exe.with_name(f"Weixin{n}.exe")
 save(new_exe, data)
 
 # [Weixin.dll]
-dll = path(input("\nWeixin.dll: "))
+dll = dllpath(input("\nWeixin.dll: "))
 data = load(dll)
 # Redirect global_config -> global_conf2g
 # Just search 'global_config' and you'll find the pattern.

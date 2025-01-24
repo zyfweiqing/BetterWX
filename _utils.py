@@ -17,8 +17,43 @@ REVERSE = "\033[7m"
 NO_REVERSE = "\033[27m"
 
 
-def path(path: str):
+def path(path: str | pathlib.Path):
     return pathlib.Path(path).resolve()
+
+
+def wxbasepath():
+    import winreg
+
+    try:
+        with winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER, r"Software\Tencent\Weixin"
+        ) as key:
+            return path(winreg.QueryValueEx(key, "InstallPath")[0])
+    except FileNotFoundError:
+        print(f"{RED}[ERR] WX 4.0 reg not found, can't auto-detect path{RESET}")
+        pause()
+        exit()
+
+
+def dllpath(dllpath: str):
+    if not dllpath:
+        base = wxbasepath()
+        for version in base.iterdir():
+            if version.is_dir() and version.name.startswith("4."):
+                print(f"{BLUE}[auto] Weixin.dll: {version / 'Weixin.dll'}{RESET}")
+                return version / "Weixin.dll"
+        print(f"{RED}[ERR] Weixin.dll not found in '{base}'{RESET}")
+        pause()
+        exit()
+    return path(dllpath)
+
+
+def exepath(exepath: str):
+    if not exepath:
+        base = wxbasepath()
+        print(f"{BLUE}[auto] Weixin.exe: {base / 'Weixin.exe'}{RESET}")
+        return base / "Weixin.exe"
+    return path(exepath)
 
 
 def pause():
