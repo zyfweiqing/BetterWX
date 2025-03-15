@@ -104,7 +104,14 @@ def backup(path: pathlib.Path):
     print(f"\n> Backing up '{path.name}'")
     bakfile = path.with_name(path.name + ".bak")
     if not os.path.exists(bakfile):
-        shutil.copy2(path, bakfile)
+        try:
+            shutil.copy2(path, bakfile)
+        except PermissionError:
+            print(
+                f"{RED}[ERR] Write failed, please run as administrator and try again{RESET}"
+            )
+            pause()
+            exit()
         print(f"{GREEN}[√] Backup created: '{bakfile.name}'{RESET}")
     else:
         print(f"{BLUE}[i] Backup '{bakfile.name}' already exists, good{RESET}")
