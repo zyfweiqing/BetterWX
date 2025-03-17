@@ -4,7 +4,7 @@
 微信 PC 4.0 防撤回/多开补丁工具
 
 支持平台：Windows x64<br>
-验证版本：WeChat Beta 4.0.2.28
+验证版本：**WeChat Beta 4.0.3.7**
 
 ## 使用方法
 0. 首先你要有比较新的 [Python](https://www.python.org/downloads/)，并且关掉了微信和烦人的安全管家。
@@ -14,11 +14,14 @@
 
    `revoke.py`：防撤回无提示<br>【所有 revokemsg 消息变为未知消息，不响应撤回操作】
 
-   `unmutex.py`：多开<br>【移除 4.0.2+ Mutex 检测】
+   `unmutex.py`：多开<br>【移除 4.0.3+ Mutex 检测】
 
    `coexist.py`：共存版制作器<br>【选择数字 ζ=0~9，生成一个 Weixinζ.exe 和 Weixin.dlζ，其设置数据保存在 global_confζg、自动登录端口数据保存在 host-redirect.xmζ】<br>【共存版的所有消息记录和原版共用，随便登录哪个应该都不会丢消息】
 
 ## 问题解答
+
+- 无权修改文件？<br>
+  以管理员权限运行试试？还不行的话请反馈。
 
 - 运行代码报错了？补丁失效了？<br>
   在 [**议题**](https://github.com/zetaloop/BetterWX/issues) 中反馈。
