@@ -51,24 +51,22 @@ data = replace(data, AUTOLOGIN_PATTERN, AUTOLOGIN_REPLACE)
 # Block multi-instance check
 # See `unmutex.py`.
 print(f"\n> Blocking multi-instance check")
-UNLOCK_PATTERN = """
+UNMUTEX_PATTERN = """
 55
-41 57
-41 56
-41 54
 56
 57
 53
 48 81 EC ?? ?? ?? ??
 48 8D AC 24 ?? ?? ?? ??
 48 C7 85 ?? ?? ?? ?? FE FF FF FF
-48 C7 45 ?? 00 00 00 00
+48 C7 85 ?? ?? ?? ?? 00 00 00 00
+B9 60 00 00 00
 """
-UNLOCK_REPLACE = """
+UNMUTEX_REPLACE = """
 C3
 ...
 """
-data = wildcard_replace(data, UNLOCK_PATTERN, UNLOCK_REPLACE)
+data = wildcard_replace(data, UNMUTEX_PATTERN, UNMUTEX_REPLACE)
 # Rename Weixin.dll -> Weixin.dl2
 new_dll = dll.with_name(f"Weixin.dl{n}")
 save(new_dll, data)
