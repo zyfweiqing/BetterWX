@@ -1,7 +1,10 @@
 from _utils import *
 
+title("Unmutex")
+print("\n - Remove WeChat multi-instance check.")
+
 # [Weixin.dll]
-dll = dllpath(input("\nWeixin.dll: "))
+dll = dllpath(input(f"\n{BOLD}Weixin.dll{NO_BOLD} (leave blank = auto detect): "))
 data = load(dll)
 # Block multi-instance check (Mutex)
 # Search 'XWeChat_App_Instance_Identity_Mutex_Name' to find the function.

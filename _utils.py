@@ -13,6 +13,8 @@ YELLOW = "\033[93m"
 BLUE = "\033[96m"
 RESET = "\033[0m"
 
+BOLD = "\033[1m"
+NO_BOLD = "\033[22m"
 REVERSE = "\033[7m"
 NO_REVERSE = "\033[27m"
 
@@ -40,7 +42,7 @@ def dllpath(dllpath: str):
         base = wxbasepath()
         for version in base.iterdir():
             if version.is_dir() and version.name.startswith("4."):
-                print(f"{BLUE}[auto] Weixin.dll: {version / 'Weixin.dll'}{RESET}")
+                print(f"{GREEN}[auto]{RESET} {version / 'Weixin.dll'}")
                 return version / "Weixin.dll"
         print(f"{RED}[ERR] Weixin.dll not found in '{base}'{RESET}")
         pause()
@@ -51,7 +53,7 @@ def dllpath(dllpath: str):
 def exepath(exepath: str):
     if not exepath:
         base = wxbasepath()
-        print(f"{BLUE}[auto] Weixin.exe: {base / 'Weixin.exe'}{RESET}")
+        print(f"{GREEN}[auto]{RESET} {base / 'Weixin.exe'}")
         return base / "Weixin.exe"
     return path(exepath)
 
@@ -60,11 +62,15 @@ def pause():
     input(f"\n{REVERSE}Press Enter to continue...{NO_REVERSE}")
 
 
-def b2hex(data: bytes, max: int = 32):
-    hex = "".join(f"{b:02X}" for b in data)
-    if max and len(hex) > max:
-        hex = hex[:max] + "..."
-    return hex
+def title(title: str):
+    print(f"{GREEN}<== [{RESET}BetterWX {title}{GREEN}] ==>{RESET}")
+
+
+def bformat(data: bytes, max: int = 32):
+    string = data.decode("utf-8", "ignore")
+    if max and len(string) > max:
+        string = string[:max] + "..."
+    return string
 
 
 def patt2hex(pattern: list, max: int = 32):
@@ -122,7 +128,7 @@ def replace(data: bytes, pattern: str | bytes, replace: str | bytes):
         pattern = pattern.encode()
     if isinstance(replace, str):
         replace = replace.encode()
-    print(f"> {b2hex(pattern, 0)} => {b2hex(replace, 0)}")
+    print(f"> {bformat(pattern, 0)} => {bformat(replace, 0)}")
 
     count = data.count(pattern)
     patched_count = data.count(replace)
@@ -133,7 +139,7 @@ def replace(data: bytes, pattern: str | bytes, replace: str | bytes):
                 f"{BLUE}[i] Found {patched_count} pattern{'' if patched_count == 1 else 's'} already patched{RESET}"
             )
             return data
-        print(f"{YELLOW}[WARN] Pattern <{b2hex(pattern)}> not found, SKIPPED!{RESET}")
+        print(f"{YELLOW}[WARN] Pattern <{bformat(pattern)}> not found, SKIPPED!{RESET}")
         return data
 
     data = data.replace(pattern, replace)

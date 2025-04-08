@@ -1,7 +1,10 @@
 from _utils import *
 
+title("Anti Revoke")
+print("\n - Prevent WeChat message revoke.")
+
 # [Weixin.dll]
-dll = dllpath(input("\nWeixin.dll: "))
+dll = dllpath(input(f"\n{BOLD}Weixin.dll{NO_BOLD} (leave blank = auto detect): "))
 data = load(dll)
 # Anti Revoke
 # Search 'revokemsg' and you'll find it.

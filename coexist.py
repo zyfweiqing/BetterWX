@@ -1,14 +1,17 @@
 from _utils import *
 
+title("Coexist")
+print("\n - Create multiple WeChat executables to use different accounts.")
+
 # Number
-n = input("\nNumber: (0~9): ")
+n = input(f"\n{BOLD}Wechat Number{NO_BOLD} (0~9): ")
 if len(n) != 1 or not n in "0123456789":
     print(f"{RED}[ERR] Invalid number{RESET}")
     pause()
     exit()
 
 # [Weixin.exe]
-exe = exepath(input("\nWeixin.exe: "))
+exe = exepath(input(f"\n{BOLD}Weixin.exe{NO_BOLD} (leave blank = auto detect): "))
 data = load(exe)
 # Redirect Weixin.dll -> Weixin.dl2
 print(f"\n> Redirecting Weixin.dll -> Weixin.dl{n}")
@@ -20,7 +23,7 @@ new_exe = exe.with_name(f"Weixin{n}.exe")
 save(new_exe, data)
 
 # [Weixin.dll]
-dll = dllpath(input("\nWeixin.dll: "))
+dll = dllpath(input(f"\n{BOLD}Weixin.dll{NO_BOLD} (leave blank = auto detect): "))
 data = load(dll)
 # Redirect global_config -> global_conf2g
 # Just search 'global_config' and you'll find the pattern.
