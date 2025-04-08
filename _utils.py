@@ -123,6 +123,27 @@ def backup(path: pathlib.Path):
         print(f"{BLUE}[i] Backup '{bakfile.name}' already exists, good{RESET}")
 
 
+def search(data: bytes, pattern: str | bytes) -> list[int]:
+    if isinstance(pattern, str):
+        pattern = pattern.encode()
+    assert isinstance(pattern, bytes)
+    pattern = b"".join(
+        b"." if bytes([c]) == b"?" else re.escape(bytes([c])) for c in pattern
+    )
+    print(f"> {bformat(pattern, 0)}")
+
+    regex = re.compile(pattern, re.DOTALL)
+    matches = [m.start() for m in regex.finditer(data)]
+
+    if not matches:
+        print(f"{YELLOW}[WARN] Pattern <{bformat(pattern)}> not found{RESET}")
+        return []
+    print(
+        f"{GREEN}[√] Found {len(matches)} pattern{'' if len(matches) == 1 else 's'}{RESET}"
+    )
+    return matches
+
+
 def replace(data: bytes, pattern: str | bytes, replace: str | bytes):
     if isinstance(pattern, str):
         pattern = pattern.encode()
