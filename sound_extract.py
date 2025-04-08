@@ -16,14 +16,14 @@ for i, idx in enumerate(matches):
     length_data = data[length_offset : length_offset + 4]
     wav_length = int.from_bytes(length_data, "big")
     if wav_length > len(data):
-        print(f"{RED}[WARN] Invalid WAV length: {wav_length}{RESET}")
+        print(f"{YELLOW}[WARN] Invalid WAV length: {wav_length:X}{RESET}")
     wav_data = data[idx : idx + wav_length]
     outpath = f"Sound_{i}_{wav_length:08X}.wav"
     try:
         with open(outpath, "wb") as f:
             f.write(wav_data)
             print(
-                f"{GREEN}[√] Sound file at {idx:08X}:{idx + wav_length:08X} -> {outpath}{RESET}"
+                f"{GREEN}[√] Sound file at Weixin.dll[{idx:08X}:{idx + wav_length:08X}] -> {outpath}{RESET}"
             )
     except PermissionError:
         print(

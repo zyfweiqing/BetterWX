@@ -58,6 +58,12 @@ def exepath(exepath: str):
     return path(exepath)
 
 
+def wavpath(soundpath: str):
+    if not soundpath:
+        return None
+    return path(soundpath)
+
+
 def pause():
     input(f"\n{REVERSE}Press Enter to continue...{NO_REVERSE}")
 
