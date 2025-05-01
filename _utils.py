@@ -47,6 +47,7 @@ def dllpath(dllpath: str):
         print(f"{RED}[ERR] Weixin.dll not found in '{base}'{RESET}")
         pause()
         exit()
+    dllpath = dllpath.strip('"').strip("'")
     return path(dllpath)
 
 
@@ -55,12 +56,14 @@ def exepath(exepath: str):
         base = wxbasepath()
         print(f"{GREEN}[auto]{RESET} {base / 'Weixin.exe'}")
         return base / "Weixin.exe"
+    exepath = exepath.strip('"').strip("'")
     return path(exepath)
 
 
 def wavpath(soundpath: str):
     if not soundpath:
         return None
+    soundpath = soundpath.strip('"').strip("'")
     return path(soundpath)
 
 
