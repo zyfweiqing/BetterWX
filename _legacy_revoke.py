@@ -1,7 +1,7 @@
 from _utils import *
 
-title("Anti Revoke")
-print("\n - Prevent WeChat message revoke.")
+title("Anti Revoke Legacy")
+print("\n - Invalidate revokemsg system message.")
 
 # [Weixin.dll]
 dll = dllpath(input(f"\n{BOLD}Weixin.dll{NO_BOLD} (leave blank = auto detect): "))
