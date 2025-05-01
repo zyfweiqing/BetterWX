@@ -51,25 +51,11 @@ print(f"\n> Redirecting host-redirect.xml -> host-redirect.xm{n}")
 AUTOLOGIN_PATTERN = "host-redirect.xml"
 AUTOLOGIN_REPLACE = f"host-redirect.xm{n}"
 data = replace(data, AUTOLOGIN_PATTERN, AUTOLOGIN_REPLACE)
-# Block multi-instance check
-# See `unmutex.py`.
-print(f"\n> Blocking multi-instance check")
-UNMUTEX_PATTERN = """
-55
-56
-57
-53
-48 81 EC ?? ?? ?? ??
-48 8D AC 24 ?? ?? ?? ??
-48 C7 85 ?? ?? ?? ?? FE FF FF FF
-48 C7 85 ?? ?? ?? ?? 00 00 00 00
-B9 60 00 00 00
-"""
-UNMUTEX_REPLACE = """
-C3
-...
-"""
-data = wildcard_replace(data, UNMUTEX_PATTERN, UNMUTEX_REPLACE)
+# Change Mutex Name
+print("\n> Renaming instance mutex")
+MUTEX_PATTERN = "\0".join("XWeChat_App_Instance_Identity_Mutex_Name")
+MUTEX_REPLACE = "\0".join(f"XWeChat_App_Instance_Identity_Mutex_Nam{n}")
+data = replace(data, MUTEX_PATTERN, MUTEX_REPLACE)
 # Rename Weixin.dll -> Weixin.dl2
 new_dll = dll.with_name(f"Weixin.dl{n}")
 save(new_dll, data)
