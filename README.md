@@ -4,7 +4,7 @@
 微信 PC 4.0 防撤回/多开补丁工具
 
 支持平台：Windows x64<br>
-验证版本：**WeChat 4.0.5.5**
+验证版本：**WeChat 4.0.5.6**
 
 ## 使用方法
 0. 首先你要有比较新的 [Python](https://www.python.org/downloads/)，并且关掉了微信和烦人的安全管家。
