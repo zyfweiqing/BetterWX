@@ -34,7 +34,7 @@ E8 ?? ?? ?? ??
 REVOKE_REPLACE = """
 ...
 48 8385 C0020000 01
-90 90 90 90
+90 90 90
 """
 data = wildcard_replace(data, REVOKE_PATTERN, REVOKE_REPLACE)
 # Allow using new SrvID for our revoke tip
