@@ -40,7 +40,7 @@
   猜你想找 [huiyadanli/RevokeMsgPatcher](https://github.com/huiyadanli/RevokeMsgPatcher)。
 
 - Linux、macOS 能用吗？<br>
-  目前不行，送我台 mac 电脑我就去学。
+  ~~送我台 mac 电脑我就去学~~ 在学了在学了ww
 
 - 共存、防撤回这几个特性我可以挑选几个 or 全都要吗？<br>
   可以的，只需执行你要的补丁即可。但是共存必须启用多开。<br>共存版拥有单独的 `Weixin.dll`，你甚至可以让不同的共存版有不同的提示音。
