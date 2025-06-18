@@ -6,6 +6,8 @@
 支持平台：Windows x64<br>
 支持版本：**WeChat 4.0.6.3**
 
+**\>\>\> 试试这个带窗口界面的更方便的工具：[afaa1991/BetterWx-UI](https://github.com/afaa1991/BetterWx-UI)**
+
 ## 使用方法
 0. 首先你要有比较新的 [Python](https://www.python.org/downloads/)，并且关掉了微信和烦人的安全管家。
 1. 把仓库克隆下来。
