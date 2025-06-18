@@ -18,23 +18,20 @@ data = load(dll)
 # Change it to:
 # SrvID += 1 for revoke tip
 # 48 8385 C0020000 01    add qword ptr [rbp+0x2C0], 1
-# 90 90 90 90
 # --------
-# This pattern needs 4.0.3+
-# --------
-# In 4.0.5+ this will match both RevokeHandler and SimplifiedRevokeHandler
-# (SimplifiedRevokeHandler does not have pat and file message logic)
+# New pattern needs 4.0.6+
 print(f"\n> Prevent message deletion & make new revoke tip id")
 REVOKE_PATTERN = """
 48 8D 55 C0
 45 31 C0
 E8 ?? ?? ?? ??
+48 8B BD 48 04 00 00
 48 85 FF
 """
 REVOKE_REPLACE = """
+48 8D 55 C0
+48 83 85 C0020000 01
 ...
-48 8385 C0020000 01
-90 90 90
 """
 data = wildcard_replace(data, REVOKE_PATTERN, REVOKE_REPLACE)
 # Allow using new SrvID for our revoke tip
