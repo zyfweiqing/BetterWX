@@ -49,6 +49,31 @@ for i, idx in enumerate(matches):
         )
         pause()
         exit()
+    rate = int.from_bytes(wav_data[0x18:0x1C], "little")
+    if rate != 44100:
+        print(
+            f"{YELLOW}[ERR] Sound file sample rate must be 44100Hz, got {rate}Hz{RESET}"
+        )
+    if wav_data[0x24:0x28] != b"data":
+        data_pos = wav_data.find(b"data", 0x24)
+        if data_pos == -1 or data_pos + 8 > len(wav_data):
+            print(f"{RED}[ERR] WAV data chunk not found.{RESET}")
+            pause()
+            exit()
+        skipped = wav_data[0x24:data_pos]
+        preview = skipped[:40].decode("ascii", "replace") + (
+            "..." if len(skipped) > 40 else ""
+        )
+        print(
+            f"{YELLOW}[WARN] Skipped {len(skipped):X} bytes of metadata: {preview}{RESET}"
+        )
+        riff_size = len(wav_data) - 8 - len(skipped)  # Fix RIFF ChunkSize
+        wav_data = (
+            wav_data[:0x04]
+            + riff_size.to_bytes(4, "little")
+            + wav_data[0x08:0x24]
+            + wav_data[data_pos:]
+        )
     if len(wav_data) > wav_length:
         print(
             f"{YELLOW}[WARN] Sound file too long ({len(wav_data):X} > {wav_length:X}), THE EXTRA PART WILL BE TRUNCATED!{RESET}"
