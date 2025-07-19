@@ -56,6 +56,11 @@ print("\n> Renaming instance mutex")
 MUTEX_PATTERN = "\0".join("XWeChat_App_Instance_Identity_Mutex_Name")
 MUTEX_REPLACE = "\0".join(f"XWeChat_App_Instance_Identity_Mutex_Nam{n}")
 data = replace(data, MUTEX_PATTERN, MUTEX_REPLACE)
+# Change Window Name
+print("\n> Renaming window name")
+WINDOW_PATTERN = "\0".join("xWechatWindow")
+WINDOW_REPLACE = "\0".join(f"xWechatWindo{n}")
+data = replace(data, WINDOW_PATTERN, WINDOW_REPLACE)
 # Rename Weixin.dll -> Weixin.dl2
 new_dll = dll.with_name(f"Weixin.dl{n}")
 save(new_dll, data)
