@@ -4,7 +4,7 @@
 微信 PC 4.0 防撤回/多开补丁工具
 
 支持平台：Windows x64<br>
-支持版本：**WeChat 4.0.6.3**
+支持版本：**WeChat 4.0.6.19**
 
 **\>\>\> 试试这个带窗口界面的更方便的工具：[afaa1991/BetterWx-UI](https://github.com/afaa1991/BetterWx-UI)**
 
@@ -15,11 +15,11 @@
 
    - `revoke.py`：**防撤回**<br>（实验性）防撤回且保留提示。方案来自 [EEEEhex/RevokeHook](https://github.com/EEEEhex/RevokeHook) 项目。<br>撤回提示会显示在对应的消息下方。<br>远程撤回时，撤回提示需要重新进入聊天窗口才会刷新出来。<br>电脑端自己撤回时，消息会变成撤回提示，消息本身需要重进聊天窗口才会再次刷新出来。<br>不拦截自己撤回、拍一拍防撤回正在研究。
 
-   - `coexist.py`：**共存**<br>选择编号 ζ=0~9，创建一个共存版 Weixinζ.exe（最多十个），隔离其互斥锁、设置、登录端口。<br>共存版的所有消息记录和原版共用，可以随意换着登录。
+   - `coexist.py`：**共存**<br>创建一个编号 0~9 的共存版 Weixinζ.exe（最多十个），隔离其互斥锁、窗口名、设置、登录端口。<br>共存版的所有消息记录和原版共用，可以随意换着登录。
 
    - `sound_extract.py`：**提取提示音**<br>提取提示音到当前目录，文件名为 `Sound_编号_十六进制大小.wav`。
 
-   - `sound_replace.py`：**修改提示音**<br>替换提示音，新的音频必须为 WAV 格式，大小不能超过原版（超过会截断）。<br>
+   - `sound_replace.py`：**修改提示音**<br>替换提示音，新的音频必须为 WAV 格式，采样率 44100，大小不能超过原版（超过会截断）。<br>
      - Sound 0 000110D0：锁定
      - Sound 1 0001678C：新消息通知
      - Sound 2 00022E2C：通话接通/挂断
@@ -42,7 +42,7 @@
   猜你想找 [huiyadanli/RevokeMsgPatcher](https://github.com/huiyadanli/RevokeMsgPatcher)。
 
 - Linux、macOS 能用吗？<br>
-  ~~送我台 mac 电脑我就去学~~ 在学了在学了ww
+  ~~送我台 mac 电脑我就去学~~ 在学了在学了qwq
 
 - 共存、防撤回这几个特性我可以挑选几个 or 全都要吗？<br>
   可以的，只需执行你要的补丁即可。但是共存必须启用多开。<br>共存版拥有单独的 `Weixin.dll`，你甚至可以让不同的共存版有不同的提示音。
