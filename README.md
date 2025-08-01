@@ -4,7 +4,7 @@
 微信 PC 4.0 防撤回/多开补丁工具
 
 支持平台：Windows x64<br>
-支持版本：**WeChat 4.0.6.19**
+支持版本：**WeChat 4.0.6.26**
 
 **\>\>\> 试试这个带窗口界面的更方便的工具：[afaa1991/BetterWx-UI](https://github.com/afaa1991/BetterWx-UI)**
 
